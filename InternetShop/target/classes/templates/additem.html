@@ -1,0 +1,40 @@
+<html xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorator="layout/admin.html">
+<div layout:fragment="sait_content">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-5 offset-3">
+                    <h3 class="text-italic" th:text="#{button.add}"></h3>
+                    <form class="form-group mt-3" th:action="@{additem}" method="post">
+                        <label class="label" th:text="#{label.name}"></label>
+                        <input type="text" class="form-control" name="name">
+                        <label class="label" th:text="#{label.price}"></label>
+                        <input type="number" class="form-control" name="price">
+                        <label class="label" th:text="#{label.amount}"></label>
+                        <input type="number" class="form-control" name="amount">
+                        <label class="label" th:text="#{label.description}"></label>
+                        <textarea type="text" class="form-control" name="description"></textarea>
+                        <label class="label" th:text="#{label.brand}"></label>
+                        <select class="form-control" name="brand">
+                            <option th:each="brand : ${brands}" th:text="${brand.getName()}" th:value="${brand.getId()}"></option>
+                        </select>
+                        <label class="label" th:text="#{label.stars}"></label>
+                        <input type="number" class="form-control" name="stars">
+                        <label class="label" th:text="#{label.pictureUrlsmall}"></label>
+                        <input type="text" class="form-control" name="picUrlsm">
+                        <label class="label" th:text="#{label.pictureUrllarge}"></label>
+                        <input type="text" class="form-control" name="picUrllge">
+                        <label class="label" th:text="#{label.isTop}"></label>
+                        <select class="form-control" name="top">
+                            <option value="1" th:text="#{option.true}"></option>
+                            <option value="0" th:text="#{option.false}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary mt-3" th:text="#{button.add}"></button>
+                        <a type="button" th:href="@{'/'}" class="btn btn-danger mt-3" th:text = "#{label.back}"></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

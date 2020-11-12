@@ -1,0 +1,74 @@
+<html xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://ultraq.net.nz/thymeleaf/layout" lang="en"
+      layout:decorator="layout/main.html">
+<div layout:fragment="sait_content">
+    <div class="container-fluid">
+
+        <form action="/search" method="post">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <input id="order" type="hidden" name="order" th:value="${order}">
+                    <label class="label" for="1" th:text="#{label.name}+':'"></label>
+                    <input type="text" id="1" class="form-control" name="name" th:value="${name}" >
+                </div>
+                <div class="col-3">
+                    <label class="label" for="2" th:text="#{brand}"></label>
+                    <select class="form-control" id="2" name="brand_id">
+                        <option th:each="brand : ${brands}" th:text="${brand.getName()}" th:value="${brand.getId()}" th:selected="(${brand.getId()}==${brand_id})"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label class="label" for="3" th:text="#{label.price_from}"></label>
+                    <input type="number" id="3" class="form-control" name="price_from" th:value="${price_from}">
+                </div>
+                <div class="col-2 px-0">
+                    <label class="label" for="4" th:text="#{label.price_to}"></label>
+                    <input type="number" id="4" class="form-control" name="price_to" th:value="${price_to}">
+                </div>
+                <div class="col-2">
+                    <button id="submit_button" type="submit" class="btn btn-sm btn-success ml-2 mt-4" th:text="#{label.search}"></button>
+                </div>
+            </div>
+        </form>
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-italic mb-0" th:text="#{search.result}"></h3>
+            <div class="row align-items-center">
+                <label th:text="#{label.order}" class="mr-3 mb-0"></label>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="asc" type="button" class="btn btn-sm btn-secondary" th:text="#{button.asc}"></button>
+                    <button id="desc" type="button" class="btn btn-sm btn-secondary" th:text="#{button.desc}">Middle</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-4 mt-3" th:each="it : ${items}">
+                <a th:href="@{/details/{id}(id = ${it.getId()})}" style="color: #000 !important; text-decoration: none">
+                    <div  class="card" style="width: 100%;">
+                        <div class="d-flex justify-content-center">
+                            <img th:src="${it.getSmallpictureUrl()}" class="card-img-top p-2 px-auto" alt="..." style="width: 95%; height: 95%;">
+                        </div>
+                        <div class="card-body">
+                            <small><h4 class="text-italic" th:text="${it.getName()}"></h4></small>
+                            <small><h6 class="text-italic" th:text="${it.getPrice()}+'$'"></h6></small>
+                            <small><p class="card-text" th:text="(${it.getDescription().length()}>25)?${it.getDescription().substring(0, 25)}+' ...':${it.getDescription()}"></p></small>
+                            <div class="row mx-auto mt-1">
+                                <small><h6 class="font-weight-bold mb-0 mr-2" style="line-height: 2; font-size: 13px;" th:text="#{brand}"></h6></small>
+                                <a th:href="@{/search/{id}(id = ${it.getBrand().getId()})}" class="text-primary mr-1" th:text="${it.getBrand().getName()}+','"></a>
+                                <a class="text-primary" th:text="${it.getBrand().getCountry().getCode()}"></a>
+                            </div>
+                        </div>
+                        <div class="card-footer row mx-1">
+                            <h5 th:style="${it.getStars()>0}? 'color:#FFDF00' :''">&starf;</h5>
+                            <h5 th:style="${it.getStars()>1}? 'color:#FFDF00' :''">&starf;</h5>
+                            <h5 th:style="${it.getStars()>2}? 'color:#FDCC0D' :''">&starf;</h5>
+                            <h5 th:style="${it.getStars()>3}? 'color:#FF9529' :''">&starf;</h5>
+                            <h5 th:style="${it.getStars()>4}? 'color:#FF9529' :''">&starf;</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
